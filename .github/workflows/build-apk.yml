@@ -6,6 +6,9 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -41,3 +44,14 @@ jobs:
         with:
           name: aloocigar-apk
           path: app/build/outputs/apk/**/*.apk
+
+      # نسخه آخر APK در شاخه apk هم گذاشته می‌شود تا با یک لینک ثابت دانلود شود
+      - name: Publish APK to branch
+        run: |
+          mkdir out
+          cp $(ls app/build/outputs/apk/*/*.apk | head -1) out/aloocigar.apk
+          cd out
+          git init -q -b apk
+          git add aloocigar.apk
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "APK ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" apk
