@@ -19,8 +19,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: android-actions/setup-android@v3
-
+      # اندروید SDK روی سرورهای GitHub از قبل نصب است
       # اگر Secretهای امضا تعریف شده باشد، نسخه نهایی امضاشده ساخته می‌شود
       - name: Prepare signing key
         if: env.HAS_KEY == 'true'
