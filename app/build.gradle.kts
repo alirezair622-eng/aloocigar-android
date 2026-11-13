@@ -1,3 +1,4 @@
+import java.net.URI
 import java.util.Properties
 
 plugins {
@@ -6,7 +7,7 @@ plugins {
 }
 
 val siteUrl: String = (project.findProperty("SITE_URL") as String? ?: "https://aloocigar.ir").trimEnd('/')
-val siteHost: String = java.net.URI(siteUrl).host
+val siteHost: String = URI(siteUrl).host
 
 // امضای نسخه نهایی: فایل keystore.properties را کنار پوشه app بسازید (راهنما در README)
 val keystoreProps = Properties().apply {
